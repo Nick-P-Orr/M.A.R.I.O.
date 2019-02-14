@@ -1,4 +1,4 @@
-from Communicator import Communicator
+#from Communicator import Communicator
 class MLCode:
     def setS(self):
         return "MLCode"
@@ -6,12 +6,24 @@ class MLCode:
     def printS(self):
         print("MLCode")
     
-    def C(self):
-        tmp = Communicator
-        s = tmp.temp1(tmp)
-        print(str(tmp.temp1(tmp))+"2")
+#    def C(self):
+#        tmp = Communicator
+#        s = tmp.temp1(tmp)
+#        print(str(tmp.temp1(tmp))+"2")
+
+    def saveFile(self):
+        file = open("MLCode.txt", "w")
+        file.write("Hello\n")
+        file.write(MLCode.setS(self)+"\n")
+
+    def readFile(self):
+        file = open("Game.txt", "r")
+        for line in file:
+            print(line)
 
 if __name__ == '__main__':
-    MLCode().setS()
-    MLCode().printS()
-    MLCode().C()
+#    MLCode().setS()
+#    MLCode().printS()
+#    MLCode().C()
+    MLCode().saveFile()
+    MLCode().readFile()

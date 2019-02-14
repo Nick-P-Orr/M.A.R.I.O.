@@ -13,11 +13,13 @@ class game:
         file = open("Game.txt", "w")
         file.write("Hello\n")
         file.write(game.setString(self)+"\n")
+        file.close()
 
     def readFile(self):
         file = open("MLCode.txt", "r")
         for line in file:
             print(line)
+        file.close()
 
 if __name__ == '__main__':
 #    game().main()

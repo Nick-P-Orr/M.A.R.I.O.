@@ -37,11 +37,54 @@ class MarioNN:
         for _ in range(self.initial_games):
             game = MarioLevel()
 
+            prev_observation = self.generate_observation()
+
+
     print('End of initial_population')
+    return training_data
 
 
-    #generate_action will randomly pick the next movement (originally -1,0,1 had an action in snake)
-    def generate_action(self, ):
-        action = randint(0,2) - 1
 
-    print('End of generate_action')
+    def generate_action():
+        #My current thinking with generating an action is to
+        #Have a running movement and normal movement just be set values
+        #ie 2 is move right, 4 is move right with run pressed
+        action = randint(0,5) - 1
+        return action, self.get_game_action()
+
+
+    def model(self):
+        network = input_data(shape=[None, 4, 1], name='input')
+        network = fully_connected(network, 1, activation='linear')
+        network = regression(network, optimizer='adam', learning_rate=self.lr, loss='mean_square', name='target')
+        model = tflearn.DNN(network, tensorboard_dir='log')
+        return model
+
+    def train_model(self, training_data, model):
+        X = np.array([i[0] for i in training_data]).reshape(-1, 4, 1)
+        y = np.array([i[1] for i in training_data]).reshape(-1, 1)
+        model.fit(X,y, n_epoch = 1, shuffle = True, run_id = self.filename)
+        model.save(self.filename)
+        return model
+
+    def test_model(self, model):
+        steps_arr = []
+
+    def train(self):
+        training_data = self.initial_population()
+        nn_model = self.model()
+        nn_model = self.train_model(training_data, nn_model)
+        self.test_model(nn_model)
+
+    def visualise(self):
+        nn_model = self.model()
+        nn_model.load(self.filename)
+        self.visualise_game(nn_model)
+
+    def test(self):
+        nn_model = self.model()
+        nn_model.load(self.filename)
+        self.test_model(nn_model)
+
+    if __name__ == "__main__":
+        MarioNN().train()

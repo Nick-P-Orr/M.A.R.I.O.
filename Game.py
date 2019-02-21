@@ -1,4 +1,5 @@
 #from MLCode import MLCode
+#from Communicator import Communicator
 
 class game:
 
@@ -8,24 +9,25 @@ class game:
     def printString(self):
          print("This is Game.py")
 
-    def checkML(self):
-        temp = MLCode
-        print(temp.printS(temp))
+    def saveFile(self):
+        file = open("Game.txt", "w")
+        file.write("Hello\n")
+        file.write(game.setString(self)+"\n")
+        file.close()
 
- #   def main(self):
-#        x = 1
-#        while 1:
-#            game.printString(self)
-#            if(x != 1):
-#                game.checkML(self)
-#            x = 0
+    def readFile(self):
+        file = open("MLCode.txt", "r")
+        for line in file:
+            print(line)
+        file.close()
 
 if __name__ == '__main__':
 #    game().main()
-    game().printString()
-    game().setString()
-    game().checkML()
-
+#    game().printString()
+#    game().setString()
+#    game().checkML()
+    game().saveFile()
+    game().readFile()
 
 
     

@@ -1,21 +1,18 @@
 from Game import game
-#import MLCode
-#from MLCode import MLCode
 
 class Communicator:
-    def temp(self):
-        tmp = game
-        print(tmp.setString(tmp)+"1")
+    currentGame = null
+    
+    def newLevel(self):
+        self.currentGame = game()
 
-    def temp1(self):
-        tmp = game
-        s = tmp.setString(tmp)+"1"
-        return s
-
+    def passInput(commands):
+        return self.currentGame.acceptInput(commands)
+        
 
 if __name__ == '__main__':
-    Communicator().temp()
-    Communicator().temp1()
+    Communicator().newLevel()
+    Communicator().passInput()
 
 
 #tmp = game

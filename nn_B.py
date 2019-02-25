@@ -29,7 +29,7 @@ class MarioNN:
                 command = self.commands[randint(0,3)] #choose which command
                 model.append([trigger, command, -1])
             else: #must choose a location to connect it to
-                location = [randint(0,15), randint(0,15)]
+                location = [randint(0,13), randint(0,15)]
                 command = self.commands[randint(0,3)]
                 model.append([trigger, command, location])
         return model
@@ -53,8 +53,10 @@ class MarioNN:
         return True
 
     def test_models(self):
+        self.models = [[[0,'right',-1],[0,'jump',-1]]]
         self.last_models = []
         for model in self.models:
+            print(model)
             self.comm.newLevel()
             response = self.comm.passInput(None)
             grid = response[1]
@@ -67,14 +69,14 @@ class MarioNN:
                 grid = response[1]
                 if response[0] >= 0:
                     prev_scores.append(response[0])
-                    if len(prev_scores) > 15:
-                        if self.checkEqual(prev_scores[-15:]):
+                    if len(prev_scores) > 30:
+                        if self.checkEqual(prev_scores[-30:]):
                             self.last_models.append((model, prev_scores[-1]))
                             done = True
                 else:
                     self.last_models.append((model, prev_scores[-1]))
                     done = True
-                time.sleep(.05)
+                time.sleep(.03)
             print(self.last_models[-1][1])
             time.sleep(.25)
 

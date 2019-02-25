@@ -1,12 +1,12 @@
-from Game import game
+from MarioLevel1 import MarioLevel
 
 class Communicator:
-    currentGame = null
+    currentGame = None
     
     def newLevel(self):
-        self.currentGame = game()
+        self.currentGame = MarioLevel()
 
-    def passInput(commands):
+    def passInput(self, commands):
         return self.currentGame.acceptInput(commands)
         
 

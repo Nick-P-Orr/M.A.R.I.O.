@@ -60,7 +60,7 @@ class MarioNN:
 
     def test_models(self):
         self.last_models = []
-        for model in self.models:
+        for model in self.models[-9:]:
             self.comm.newLevel()
             response = self.comm.passInput(None)
             grid = response[1]
@@ -161,9 +161,9 @@ for i in m.last_models:
 print("Random Avg: "+str(sum/10))
 
 mod = m.model()
-for x in range(15):
+for x in range(100):
     print(len(m.last_models))
-    training_data = m.preprocess_data(m.last_models)
+    training_data = m.preprocess_data([m.models])
     trained = m.train_model(training_data, mod)
     predictions = m.predict_new_models(trained)
     m.chooseNew(predictions)
@@ -174,11 +174,7 @@ sum=0
 for i in m.last_models:
     sum+=i[1]
 print("Learned Avg: "+str(sum/10))
-m.last_models.sort(key=m.getScore)
-chosen = m.last_models[0:10]
-chosen = [i[0] for i in chosen]
-for i in chosen:
-    print(i)
+print(m.last_models)
 
 
 

@@ -15,11 +15,13 @@ class MarioLevel:
     run_once = None
     keypress = []
     offset = 0
+    show = True
 
     def __init__(self):
         pygame.init()
         self.size = self.width, self.height = 512,256
-        self.screen = pygame.display.set_mode((self.size))
+        if self.show:
+            self.screen = pygame.display.set_mode((self.size))
         #0 is nothing, 1 is blocks
         self.blocks = [
                         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -231,8 +233,8 @@ class MarioLevel:
             if event.type == pygame.QUIT:
                 self.done = True
                 exit()
-
-        self.screen.fill((0,0,0))
+        if self.show:
+            self.screen.fill((0,0,0))
 
         self.block_rects = []
 
@@ -241,12 +243,14 @@ class MarioLevel:
             for y in range(len(self.blocks)):
                 if self.blocks[y][x] == 1:
                     self.block_rects.append(pygame.Rect(x*16 - self.offset,y*16,16,16))
-        for r in self.block_rects:
-            pygame.draw.rect(self.screen, (255,255,255), r)
-        #draw mario
-        pygame.draw.rect(self.screen, (255,0,0), pygame.Rect(120,self.mario_loc[0],16,16))
+        if self.show:
+            for r in self.block_rects:
+                pygame.draw.rect(self.screen, (255,255,255), r)
+            #draw mario
 
-        pygame.display.flip()
+            pygame.draw.rect(self.screen, (255,0,0), pygame.Rect(120,self.mario_loc[0],16,16))
+
+            pygame.display.flip()
         self.run_once = True
 
 if __name__ == '__main__':

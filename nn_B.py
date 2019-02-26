@@ -52,11 +52,11 @@ class MarioNN:
                     exit()
         return commands
 
-    def checkEqual(self, l):
+    def checkStuck(self, l):
         for i in l:
-            if i != l[0]:
-                return False
-        return True
+            if l.count(i) > 2:
+                return True
+        return False
 
     def test_models(self):
         self.last_models = []
@@ -74,8 +74,8 @@ class MarioNN:
                 grid = response[1]
                 if response[0] >= 0:
                     prev_scores.append(response[0])
-                    if len(prev_scores) > 30:
-                        if self.checkEqual(prev_scores[-30:]):
+                    if len(prev_scores) > 100:
+                        if self.checkStuck(prev_scores[-100:]):
                             self.last_models.append([model, prev_scores[-1]])
                             done = True
                 else:

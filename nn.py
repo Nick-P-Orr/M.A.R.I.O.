@@ -65,6 +65,8 @@ class MarioNN:
     def test_models(self):
         self.last_models = []
         for model in self.models[-9:]:
+            self.num=1
+            self.max_x = 0
             self.comm.newLevel()
             response = self.comm.passInput(None)
             grid = response[1]

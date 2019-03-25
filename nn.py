@@ -76,7 +76,9 @@ class MarioNN:
                 commands = self.compile_commands(grid, model)
                 response = self.comm.passInput(commands)
                 response[0] -= 120
-                done = response[2]
+                if response[2]:
+                    self.last_models.append([model, response[0]])
+                    break
                 grid = response[1]
                 if response[0] >= 0:
                     prev_scores.append(response[0])
@@ -114,7 +116,7 @@ class MarioNN:
             processed_data.append([processed_pop, pop[1]])
         return processed_data
 
-    def preprocess_data2(self, data): #digs into array less because new prediction data doe not have outputs
+    def preprocess_data2(self, data): #digs into array less because new prediction data does not have outputs
         processed_data = []
         for connection in data:
             new_value = str(connection[0])+str(connection[1])
@@ -168,8 +170,7 @@ for i in m.last_models:
 print("Random Avg: "+str(sum/10))
 
 mod = m.model()
-for x in range(100):
-    print(len(m.last_models))
+for x in range(30):
     training_data = m.preprocess_data([m.models])
     trained = m.train_model(training_data, mod)
     predictions = m.predict_new_models(trained)

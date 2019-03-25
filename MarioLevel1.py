@@ -246,27 +246,63 @@ class MarioLevel:
             if enemy[0] - self.mario_loc[1] <= 256 and enemy[0] - self.mario_loc[1] > 0:
                 n+=1
                 enemy[1] += enemy_speed
-                xloc = enemy[0] % 16
-                xlocback = xloc-1
-                xlocforward = xloc+1
-                yloc = enemy[1] % 16
-                ylocdown = yloc+1
-                xloc*=16
-                xlocback*=16
-                xlocforward*=16
-                yloc*=16
-                ylocdown*=16
-                rects = [pygame.Rect((xloc, yloc),(16,16)),pygame.Rect((xloc, ylocdown),(16,16)),pygame.Rect((xlocback, yloc),(16,16)),pygame.Rect((xlocback, ylocdown),(16,16)),pygame.Rect((xlocforward, yloc),(16,16)),pygame.Rect((xlocforward, ylocdown),(16,16))]
+                xloc = int(((enemy[0] / 16)))
+                xlocback = int(((enemy[0] / 16)-1))
+                xlocforward = int(((enemy[0] / 16)+1))
+                ylocup = int(((enemy[1] / 16)))
+                yloc = int(((enemy[1] / 16)))+1
+                ylocdown = int(((enemy[1] / 16)+2))
+
+                rects = []
+                if self.blocks[yloc][xloc] == 1:
+                    rects.append(pygame.Rect((xloc*16, yloc*16),(16,16)))
+                if self.blocks[ylocdown][xloc] == 1:
+                    rects.append(pygame.Rect((xloc*16, ylocdown*16),(16,16)))
+                if self.blocks[yloc][xlocback] == 1:
+                    rects.append(pygame.Rect((xlocback*16, yloc*16),(16,16)))
+                if self.blocks[ylocdown][xlocback] == 1:
+                    rects.append(pygame.Rect((xlocback*16, ylocdown*16),(16,16)))
+                if self.blocks[yloc][xlocforward] == 1:
+                    rects.append(pygame.Rect((xlocforward*16, yloc*16),(16,16)))
+                if self.blocks[ylocdown][xlocforward] == 1:
+                    rects.append(pygame.Rect((xlocforward*16, ylocdown*16),(16,16)))
                 for rect in rects:
-                        if rect.collidepoint(enemy[0]+8, enemy[1]+16):
-                            enemy[1] = rect.top-16
+                    if rect.collidepoint(enemy[0]+8, enemy[1]+16):
+                        enemy[1] = rect.top-16
+
                 if enemy[2] == 0:
+                    rects = []
+                    if self.blocks[yloc][xloc] == 1:
+                        rects.append(pygame.Rect((xloc*16, yloc*16),(16,16)))
+                    if self.blocks[ylocdown][xloc] == 1:
+                        rects.append(pygame.Rect((xloc*16, ylocdown*16),(16,16)))
+                    if self.blocks[ylocup][xloc] == 1:
+                        rects.append(pygame.Rect((xloc*16, ylocup*16),(16,16)))
+                    if self.blocks[yloc][xlocback] == 1:
+                        rects.append(pygame.Rect((xlocback*16, yloc*16),(16,16)))
+                    if self.blocks[ylocdown][xlocback] == 1:
+                        rects.append(pygame.Rect((xlocback*16, ylocdown*16),(16,16)))
+                    if self.blocks[ylocup][xlocback] == 1:
+                        rects.append(pygame.Rect((xlocback*16, ylocup*16),(16,16)))
                     enemy[0] -= enemy_speed
                     for rect in rects:
                         if rect.colliderect(pygame.Rect(enemy[0],enemy[1],16,16)):
                             enemy[0] = rect.right
                             enemy[2] = 1
                 else:
+                    rects = []
+                    if self.blocks[yloc][xloc] == 1:
+                        rects.append(pygame.Rect((xloc*16, yloc*16),(16,16)))
+                    if self.blocks[ylocdown][xloc] == 1:
+                        rects.append(pygame.Rect((xloc*16, ylocdown*16),(16,16)))
+                    if self.blocks[ylocup][xloc] == 1:
+                        rects.append(pygame.Rect((xloc*16, ylocup*16),(16,16)))
+                    if self.blocks[yloc][xlocback] == 1:
+                        rects.append(pygame.Rect((xlocback*16, yloc*16),(16,16)))
+                    if self.blocks[ylocdown][xlocback] == 1:
+                        rects.append(pygame.Rect((xlocback*16, ylocdown*16),(16,16)))
+                    if self.blocks[ylocup][xlocback] == 1:
+                        rects.append(pygame.Rect((xlocback*16, ylocup*16),(16,16)))
                     enemy[0] += enemy_speed
                     for rect in rects:
                         if rect.colliderect(pygame.Rect(enemy[0],enemy[1],16,16)):

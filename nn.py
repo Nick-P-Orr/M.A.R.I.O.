@@ -14,6 +14,7 @@ class MarioNN:
     last_models = []
     commands = ['left', 'right', 'run', 'jump']
     max_x = 0
+    num = 1
 
     def __init__(self):
         self.comm = Communicator()
@@ -54,10 +55,12 @@ class MarioNN:
         return commands
 
     def checkStuck(self, l):
-        if l <= self.max_x:
-            return True
-        max_x = l
-        return False
+        flag = True
+        for el in l:
+            if el > self.max_x:
+                flag = False
+                self.max_x = el
+        return flag
 
     def test_models(self):
         self.last_models = []
@@ -75,9 +78,11 @@ class MarioNN:
                 grid = response[1]
                 if response[0] >= 0:
                     prev_scores.append(response[0])
-                    if self.checkStuck(prev_scores[-1]):
-                        self.last_models.append([model, prev_scores[-1]])
-                        done = True
+                    if len(prev_scores) > 60*self.num:
+                        self.num+=1
+                        if self.checkStuck(prev_scores[-60:]):
+                            self.last_models.append([model, prev_scores[-1]])
+                            done = True
                 else:
                     self.last_models.append([model, prev_scores[-1]])
                     done = True

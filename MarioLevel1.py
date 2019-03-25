@@ -228,6 +228,9 @@ class MarioLevel:
                 self.mario_loc[0] += self.mario_loc[3]
             else:
                 self.mario_loc[4] = True
+                file = open('commands.txt', 'a')
+                file.write('right,run\n')
+                file.close()
         else:
             self.mario_loc[4] = False
             self.mario_loc[0] += self.mario_loc[3]

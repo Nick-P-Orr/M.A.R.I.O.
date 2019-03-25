@@ -163,10 +163,13 @@ class MarioNN:
 
 m = MarioNN()
 m.initial_population()
+m.models = [[[0,1,-1],[0,3,-1],[0,2,-1]]]
 m.test_models()
+"""
 sum=0
 for i in m.last_models:
     sum+=i[1]
+print(m.last_models)
 print("Random Avg: "+str(sum/10))
 
 mod = m.model()
@@ -183,6 +186,6 @@ for i in m.last_models:
     sum+=i[1]
 print("Learned Avg: "+str(sum/10))
 print(m.last_models)
-
+"""
 
 
